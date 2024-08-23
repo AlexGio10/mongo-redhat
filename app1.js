@@ -1,30 +1,23 @@
-const { MongoClient } = require('mongodb');
+const express = require('express');
+const mongoose = require('mongoose');
 
-// URL de conexión de MongoDB
-const uri = "mongodb+srv://andre2:1234@myatlasclusteredu.zamwt2c.mongodb.net/sample_mflix?retryWrites=true&w=majority&appName=myAtlasClusterEDU";
+const app = express();
+const port = process.env.PORT || 8080;
 
-// Crear una nueva instancia de MongoClient
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+// Conectar a MongoDB Atlas usando el enlace proporcionado
+mongoose.connect('mongodb+srv://andre2:1234@myatlasclusteredu.zamwt2c.mongodb.net/?retryWrites=true&w=majority&appName=myAtlasClusterEDU', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => {
+    console.log('Conectado a MongoDB Atlas');
+}).catch(err => {
+    console.error('Error al conectar a MongoDB', err);
+});
 
-async function conectarYConsultar() {
-  try {
-    // Conectar al cliente
-    await client.connect();
+app.get('/', (req, res) => {
+    res.send('¡Aplicación funcionando!');
+});
 
-    console.log("Conectado a MongoDB");
-
-    const db = client.db('nombreBaseDatos');
-    const collection = db.collection('nombreColeccion');
-
-    // Realizar una consulta
-    const resultado = await collection.find({}).toArray();
-    console.log(resultado);
-  } catch (err) {
-    console.error(err);
-  } finally {
-    // Cerrar la conexión
-    await client.close();
-  }
-}
-
-conectarYConsultar();
+app.listen(port, () => {
+    console.log(`Servidor ejecutándose en http://localhost:${port}`);
+});
