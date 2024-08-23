@@ -19,5 +19,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Servidor ejecutándose en http://localhost:${port}`);
+    console.log(`Servidor ejecutándose en http://mongo-openshift-route-mongodb-demo.apps.8262f.dynamic.redhatworkshops.io:${port}`);
 });
