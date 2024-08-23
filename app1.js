@@ -15,7 +15,7 @@ mongoose.connect('mongodb+srv://andre2:1234@myatlasclusteredu.zamwt2c.mongodb.ne
 });
 
 app.get('/', (req, res) => {
-    res.send('¡Aplicación funcionando!'
+    res.send('¡Aplicación!');
 });
 
 app.listen(port, () => {
