@@ -21,16 +21,15 @@ const movieSchema = new mongoose.Schema({
 });
  
 const Movie = mongoose.model('Movie', movieSchema, 'movies');
-
  
-// Ruta para buscar la película "Jurassic Park"
-app.get('/find-jurassic-park', async (req, res) => {
+// Ruta principal que realiza la consulta y muestra el resultado
+app.get('/', async (req, res) => {
     try {
         const movie = await Movie.findOne({ title: 'Jurassic Park' });
         if (movie) {
-            res.json(movie);
+            res.send(`¡Aplicación corriendo chido!<br><br>Película encontrada: ${movie.title}<br>Detalles: ${JSON.stringify(movie)}`);
         } else {
-            res.status(404).send('Película no encontrada');
+            res.send('¡Aplicación corriendo chido!<br><br>Película "Jurassic Park" no encontrada.');
         }
     } catch (err) {
         console.error('Error al realizar la consulta', err);
