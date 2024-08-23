@@ -44,5 +44,5 @@ app.get('/', async (req, res) => {
 
 // Iniciar el servidor
 app.listen(port, () => {
-    console.log(`Servidor ejecutándose en http://localhost:${port}`);
+    console.log(`http://ejemploredhat-mongodb-demo.apps.8262f.dynamic.redhatworkshops.io/:${port}`);
 });
