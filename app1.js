@@ -21,11 +21,7 @@ const movieSchema = new mongoose.Schema({
 });
  
 const Movie = mongoose.model('Movie', movieSchema, 'movies');
- 
-// Ruta principal
-app.get('/', (req, res) => {
-    res.send('¡Aplicación corriendo chido!');
-});
+
  
 // Ruta para buscar la película "Jurassic Park"
 app.get('/find-jurassic-park', async (req, res) => {
