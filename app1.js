@@ -1,48 +1,30 @@
-const express = require('express');
-const mongoose = require('mongoose');
+const { MongoClient } = require('mongodb');
 
-const app = express();
-const port = process.env.PORT || 8080;
+// URL de conexión de MongoDB
+const uri = "mongodb+srv://andre2:1234@myatlasclusteredu.zamwt2c.mongodb.net/sample_mflix?retryWrites=true&w=majority&appName=myAtlasClusterEDU";
 
-// Conectar a MongoDB Atlas usando el enlace proporcionado
-mongoose.connect('mongodb+srv://andre2:1234@myatlasclusteredu.zamwt2c.mongodb.net/sample_mflix?retryWrites=true&w=majority&appName=myAtlasClusterEDU', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => {
-    console.log('Conectado a MongoDB Atlas');
-}).catch(err => {
-    console.error('Error al conectar a MongoDB', err);
-});
+// Crear una nueva instancia de MongoClient
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
-// Definir el esquema y el modelo
-const movieSchema = new mongoose.Schema({
-    title: String,
-    director: String,
-    year: Number,
-    // Otros campos que pueda tener el documento en la colección
-});
+async function conectarYConsultar() {
+  try {
+    // Conectar al cliente
+    await client.connect();
 
-const Movie = mongoose.model('Movie', movieSchema, 'movies');
+    console.log("Conectado a MongoDB");
 
-// Ruta principal que realiza la consulta a MongoDB y muestra el resultado
-app.get('/', async (req, res) => {
-    try {
-        // Ejemplo de consulta: encontrar todas las películas dirigidas por un director específico
-        const director = req.query.director || 'Steven Spielberg'; // Ejemplo de parámetro de consulta
-        const movies = await Movie.find({ director: director });
+    const db = client.db('nombreBaseDatos');
+    const collection = db.collection('nombreColeccion');
 
-        if (movies.length > 0) {
-            res.send(`Películas dirigidas por ${director}:<br>${movies.map(movie => `- ${movie.title} (${movie.year})`).join('<br>')}`);
-        } else {
-            res.send(`No se encontraron películas dirigidas por ${director}.`);
-        }
-    } catch (err) {
-        console.error('Error al realizar la consulta', err);
-        res.status(500).send('Error interno del servidor jejejejeje');
-    }
-});
+    // Realizar una consulta
+    const resultado = await collection.find({}).toArray();
+    console.log(resultado);
+  } catch (err) {
+    console.error(err);
+  } finally {
+    // Cerrar la conexión
+    await client.close();
+  }
+}
 
-// Iniciar el servidor
-app.listen(port, () => {
-    console.log(`Servidor ejecutándose en http://localhost:${port}`);
-});
+conectarYConsultar();
