@@ -35,7 +35,7 @@ app.get('/', async (req, res) => {
         }
     } catch (err) {
         console.error('Error al realizar la consulta', err);
-        res.status(500).send('Error interno del servidor');
+        res.status(500).send('Error interno del servidor1111111');
     }
 });
 
