@@ -38,11 +38,11 @@ app.get('/', async (req, res) => {
         }
     } catch (err) {
         console.error('Error al realizar la consulta', err);
-        res.status(500).send('Error interno del servidor');
+        res.status(500).send('Error interno del servidor jejejejeje');
     }
 });
 
 // Iniciar el servidor
 app.listen(port, () => {
-    console.log(`Servidor ejecutándose en https://ejemplo-mongo-app-mongodb-demo.apps.8262f.dynamic.redhatworkshops.io/:${port}`);
+    console.log(`Servidor ejecutándose en http://localhost:${port}`);
 });
